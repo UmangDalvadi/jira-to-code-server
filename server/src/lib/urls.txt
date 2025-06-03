@@ -1,0 +1,3 @@
+Atlassian Dev Console: https://developer.atlassian.com/console/myapps/
+
+Jira: https://yorkhackathonteam15.atlassian.net/jira/your-work
