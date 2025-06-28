@@ -48,12 +48,12 @@ export const jiraAuthMiddleware = async (req, res, next) => {
       console.error('Failed to refresh token:', err.response?.data || err.message);
       // Clear invalid refresh token
       res.clearCookie('jira_refresh_token');
-      return res.redirect('http://localhost:3000/api/auth/jira'); // Re-initiate OAuth
+      return res.redirect(`${process.env.API_DOMAIN}/api/auth/jira`); // Re-initiate OAuth
     }
   }
 
   console.log("redirect to auth:::::::::::::::::::")
 
   // If no tokens, initiate the OAuth flow
-  return res.redirect('http://localhost:3000/api/auth/jira');
+  return res.redirect(`${process.env.API_DOMAIN}/api/auth/jira`);
 };

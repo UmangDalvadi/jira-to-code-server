@@ -28,12 +28,12 @@ export const redirectToAtlassian = (req, res) => {
   )}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${state}&response_type=code&prompt=consent`;
 
   console.log("redirect to atllasian auth::::::::::::::::::", authUrl)
-   res.redirect(authUrl);
+  res.redirect(authUrl);
 };
 
 // Step 2: Handle OAuth callback and exchange code for access token
 export const handleAtlassianCallback = async (req, res) => {
-  const code = req.query.code ;
+  const code = req.query.code;
 
   if (!code) {
     return res.status(400).json({ error: 'Authorization code is missing' });
@@ -67,7 +67,7 @@ export const handleAtlassianCallback = async (req, res) => {
     });
 
     // Redirect to your app's frontend/dashboard after successful login
-    return res.redirect('http://localhost:5173');
+    return res.redirect(process.env.FRONTEND_DOMAIN || 'http://localhost:5173'); // Replace with your frontend URL
   } catch (err) {
     console.error('Token exchange failed:', err.response?.data || err.message);
     return res.status(500).json({ error: 'Token exchange failed' });

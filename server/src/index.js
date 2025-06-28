@@ -13,8 +13,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173', 
-  credentials: true              
+  origin: process.env.FROENTEND_DOMAIN || 'http://localhost:5173', // Replace with your client URL
+  credentials: true
 }));
 app.use(express.json());
 
@@ -26,5 +26,5 @@ app.use('/api/jira', jiraRoutes);
 // })
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on ${process.env.API_DOMAIN || 'http://localhost:3000'}`);
 });
