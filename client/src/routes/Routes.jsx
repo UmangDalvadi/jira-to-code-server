@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import JiraAuthLoading from "../pages/RedirectLoadingPage";
-
+import JiraAuthLoading from "../pages/JiraAuthLoading";
 
 export default function AppRoutes() {
   return (

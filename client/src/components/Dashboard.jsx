@@ -15,16 +15,7 @@ import axios from "axios";
 const JiraPipelineUI = () => {
   const [input, setInput] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  // const [currentStep, setCurrentStep] = useState(null);
   const [results, setResults] = useState(null);
-
-  // const steps = [
-  //   { id: 'fetch', icon: MessageSquare, label: 'Fetching Jira ticket', color: 'text-blue-500' },
-  //   { id: 'parse', icon: Code, label: 'Parsing requirements', color: 'text-purple-500' },
-  //   { id: 'generate', icon: FileCode, label: 'Generating code', color: 'text-green-500' },
-  //   { id: 'test', icon: TestTube, label: 'Creating tests', color: 'text-orange-500' },
-  //   { id: 'deploy', icon: GitBranch, label: 'Creating PR', color: 'text-indigo-500' },
-  // ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -82,27 +73,6 @@ const JiraPipelineUI = () => {
       {/* Main Content */}
       <main className="flex-1 flex flex-col items-center justify-center p-6">
         <div className="w-full max-w-4xl">
-          {/* Welcome Section */}
-          {/* {!isProcessing && !results && (
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Transform Jira tickets into production-ready code
-              </h2>
-              <p className="text-lg text-gray-600 mb-8">
-                Paste a Jira ticket URL and watch as we automatically generate code, tests, and create a pull request.
-              </p>
-
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-12">
-                {steps.map((step, index) => (
-                  <div key={step.id} className="flex flex-col items-center p-4 bg-white rounded-lg border border-gray-200">
-                    <step.icon className={`w-8 h-8 ${step.color} mb-2`} />
-                    <span className="text-sm font-medium text-gray-700 text-center">{step.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )} */}
-
           {/* Input Form */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
             <div className="space-y-4">
@@ -141,110 +111,6 @@ const JiraPipelineUI = () => {
               )}
             </div>
           </div>
-
-          {/* Processing Steps */}
-          {/* {isProcessing && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Processing your request...</h3>
-              <div className="space-y-3">
-                {steps.map((step, index) => {
-                  const isActive = currentStep === step.id;
-                  const isCompleted = steps.findIndex(s => s.id === currentStep) > index;
-                  
-                  return (
-                    <div key={step.id} className="flex items-center space-x-3">
-                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                        isCompleted ? 'bg-green-500' : isActive ? 'bg-blue-500' : 'bg-gray-200'
-                      }`}>
-                        {isCompleted ? (
-                          <CheckCircle className="w-4 h-4 text-white" />
-                        ) : isActive ? (
-                          <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
-                        ) : (
-                          <div className="w-2 h-2 bg-gray-400 rounded-full" />
-                        )}
-                      </div>
-                      <span className={`${isActive ? 'text-blue-600 font-medium' : isCompleted ? 'text-green-600' : 'text-gray-500'}`}>
-                        {step.label}
-                      </span>
-                      {isActive && (
-                        <div className="flex space-x-1">
-                          <div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce" />
-                          <div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }} />
-                          <div className="w-1 h-1 bg-blue-500 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }} />
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )} */}
-
-          {/* Results */}
-          {/* {results && (
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center space-x-2 mb-4">
-                <CheckCircle className="w-6 h-6 text-green-500" />
-                <h3 className="text-lg font-semibold text-gray-900">Pipeline completed successfully!</h3>
-              </div>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Jira Ticket</h4>
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="font-mono text-sm text-blue-600">{results.ticket.key}</p>
-                      <p className="text-sm text-gray-700">{results.ticket.title}</p>
-                      <p className="text-xs text-green-600 mt-1">Status: {results.ticket.status}</p>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Generated Files</h4>
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      {results.files.map((file, index) => (
-                        <p key={index} className="font-mono text-sm text-gray-700">{file}</p>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Git Integration</h4>
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-sm text-gray-700 mb-1">Branch: <span className="font-mono text-blue-600">{results.branch}</span></p>
-                      <p className="text-sm text-gray-700">Test Coverage: <span className="font-semibold text-green-600">{results.coverage}</span></p>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h4 className="font-medium text-gray-900 mb-2">Pull Request</h4>
-                    <a 
-                      href={results.prUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors"
-                    >
-                      <GitBranch className="w-4 h-4" />
-                      <span>View PR</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <button
-                onClick={() => {
-                  setInput('');
-                  setResults(null);
-                }}
-                className="mt-6 w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors"
-              >
-                Process another ticket
-              </button>
-            </div>
-          )} */}
 
           {isProcessing && (
             <div className="flex items-center justify-center py-10">
