@@ -12,9 +12,8 @@ function extractTicketKey(jiraUrl) {
     return match ? match[1] : null;
 }
 
-export async function fetchJiraTicketDetails(req, res) {
+export async function fetchJiraTicketDetails(jiraUrl) {
     try {
-        const { jiraUrl } = req.body;
 
         console.log("jiraUrl::::::::::", jiraUrl)
 
@@ -66,12 +65,15 @@ export async function fetchJiraTicketDetails(req, res) {
 
 export async function ticketDetails(req, res) {
     try {
-        const ticket = await fetchJiraTicketDetails(req);
+
+        const { jiraUrl } = req.body;
+
+        const ticket = await fetchJiraTicketDetails(jiraUrl);
 
         console.log("ticket:::::::::::::::::::", ticket)
 
         // const llmResult = await extractRequirementsWithLLM(ticket);
-        const Docs = await extractDocsFromGemini(ticket);
+        const Docs = await extractDocsFromGemini(ticket, jiraUrl);
 
         console.log("Docs:::::::::::::::::::", Docs)
 
@@ -85,6 +87,8 @@ export async function ticketDetails(req, res) {
     }
 }
 
+
+//========================================================
 export async function generateCode(req, res) {
     try {
         const { jiraDocs } = req.body;
@@ -96,8 +100,8 @@ export async function generateCode(req, res) {
         }
 
         const code = await extractCodeFromLLM(jiraDocs);
-        console.log("Generated code:", code);
-        res.json({ code });
+        console.log("Generated code:::::::::::::::::::", code);
+        res.json(code);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to generate code' });
