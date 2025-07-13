@@ -21,9 +21,9 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/jira', jiraRoutes);
 
-// app.get('/', (req, res)=>{
-//     res.send("hello from york simiiii")
-// })
+app.get('/', (req, res) => {
+  res.send("hello from yorkieessss")
+})
 
 app.listen(PORT, () => {
   console.log(`Server running on ${process.env.API_DOMAIN || 'http://localhost:3000'}`);
